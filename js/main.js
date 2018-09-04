@@ -35,11 +35,32 @@ class Hero {
     this.y = 170;
     this.width = 60;
     this.height = 90;
+    this.image0 = new Image();
+    this.image0.src = "./images/hero/hero_stop.png";
     this.image1 = new Image();
     this.image1.src = "./images/hero/run/run1.png";
     this.image2 = new Image();
     this.image2.src = "./images/hero/run/run2.png";
+    this.image3 = new Image();
+    this.image3.src = "./images/hero/run/run3.png";
+    this.image4 = new Image();
+    this.image4.src = "./images/hero/run/run4.png";
+    this.image5 = new Image();
+    this.image5.src = "./images/hero/run/run5.png";
+    this.image6 = new Image();
+    this.image6.src = "./images/hero/run/run6.png";
+    this.image7 = new Image();
+    this.image7.src = "./images/hero/run/run7.png";
+    this.image8 = new Image();
+    this.image8.src = "./images/hero/run/run8.png";
+    this.image9 = new Image();
+    this.image9.src = "./images/hero/run/run9.png";
+    this.image10 = new Image();
+    this.image10.src = "./images/hero/run/run10.png";
+    this.image11 = new Image();
+    this.image11.src = "./images/hero/hero_up.png";
     this.image = this.image1;
+    this.action = "stop";
   }
 
   collision(item) {
@@ -52,6 +73,52 @@ class Hero {
   }
 
   draw() {
+    switch (this.action) {
+      case "stop":
+        this.image = this.image0;
+        break;
+      case "see-up":
+        this.image = this.image11;
+        break;
+      case "right":
+        if (frames % 5 === 0) {
+          switch (this.image) {
+            case this.image1:
+              this.image = this.image2;
+              break;
+            case this.image2:
+              this.image = this.image3;
+              break;
+            case this.image3:
+              this.image = this.image4;
+              break;
+            case this.image4:
+              this.image = this.image5;
+              break;
+            case this.image5:
+              this.image = this.image6;
+              break;
+            case this.image6:
+              this.image = this.image7;
+              break;
+            case this.image7:
+              this.image = this.image8;
+              break;
+            case this.image8:
+              this.image = this.image9;
+              break;
+            case this.image9:
+              this.image = this.image10;
+              break;
+            case this.image0:
+            case this.image10:
+              this.image = this.image1;
+              break;
+          }
+        }
+        break;
+    }
+    //console.log(this.action);
     ctx.drawImage(this.image, this.x, this.y, this.width, this.height);
   }
 }
@@ -86,7 +153,7 @@ function restart() {
 }
 
 addEventListener("keyup", function(e) {
-  hero.image.src = "./images/hero/hero_stop.png";
+  hero.action = "stop";
 });
 
 addEventListener("keydown", function(e) {
@@ -97,7 +164,7 @@ addEventListener("keydown", function(e) {
       break;
     //Mirar arriba
     case 38:
-      hero.image.src = "./images/hero/hero_up.png";
+      hero.action = "see-up";
       break;
     //Ir derecha
     case 39:
@@ -108,11 +175,11 @@ addEventListener("keydown", function(e) {
       hero.x < canvas.width - hero.width
         ? (hero.x += 5)
         : (hero.x = canvas.width - hero.width);
-      hero.image.src = "./images/hero/hero_right.png";
+      hero.action = "right";
       break;
     //Agacharse
     case 40:
-      hero.image.src = "./images/hero/hero_down.png";
+      hero.action = "";
       break;
   }
 });
