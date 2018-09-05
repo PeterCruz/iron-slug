@@ -2,7 +2,7 @@ var canvas = document.getElementById("canvas");
 var ctx = canvas.getContext("2d");
 var interval;
 var frames = 0;
-var gravity = 2;
+var gravity = 0.10;
 
 class Background {
   constructor() {
@@ -33,6 +33,9 @@ class Hero {
   constructor() {
     this.x = 10;
     this.y = 170;
+    this.vx = 0;
+    this.vy = 1;
+    this.jump = false;
     this.width = 60;
     this.height = 90;
     this.side = "";
@@ -190,7 +193,15 @@ class Hero {
         }
         break;
     }
-    //console.log(this.action);
+    if (this.jump) {
+      this.jump = false;
+      if (this.y < canvas.height - 280) {
+        this.vy += gravity;
+        this.y += this.vy;
+        this.x += this.vx;
+        this.jump = true;
+      }
+    }
     ctx.drawImage(this.image, this.x, this.y, this.width, this.height);
   }
 }
@@ -225,7 +236,6 @@ function restart() {
 }
 
 addEventListener("keyup", function(e) {
-  console.log(hero.action);
   if (hero.side == "left") {
     hero.action = "stop-left";
     return;
@@ -235,6 +245,11 @@ addEventListener("keyup", function(e) {
 
 addEventListener("keydown", function(e) {
   switch (e.keyCode) {
+    //Saltar
+    case 32:
+      hero.y -= 150;
+      hero.jump = true;
+      break;
     //Ir izquierda
     case 37:
       hero.x > 10 ? (hero.x -= 5) : (hero.x = 10);
@@ -258,10 +273,6 @@ addEventListener("keydown", function(e) {
         ? (hero.x += 5)
         : (hero.x = canvas.width - hero.width);
       hero.action = "right";
-      break;
-    //Agacharse
-    case 40:
-      hero.action = "";
       break;
   }
 });
