@@ -48,8 +48,16 @@ addEventListener("keydown", function(e) {
   //Saltar
   if (keys[32]) {
     hero.vx = 0;
-    hero.y -= 250;
-    hero.jump = true;
+    //Evitar que se salga de la pantalla
+    if (hero.y > 200) {
+      hero.y -= 250;
+      hero.jump = true;
+    }
+  }
+  // Saltar, apuntar abajo y disparar
+  if (keys[32] && keys[40] && keys[83]) {
+    hero.action = "shot-down";
+    return;
   }
   //Disparar arriba
   if (keys[38] && keys[83]) {

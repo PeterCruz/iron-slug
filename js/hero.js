@@ -88,6 +88,10 @@ class Hero {
     this.image38.src = "./images/hero/shot/shot-up3-izq.png";
     this.image39 = new Image();
     this.image39.src = "./images/hero/shot/shot-up4-izq.png";
+    this.image40 = new Image();
+    this.image40.src = "./images/hero/shot/shot-down1.png";
+    this.image41 = new Image();
+    this.image41.src = "./images/hero/shot/shot-down2.png";
     this.image = this.image1;
     this.action = "stop";
   }
@@ -274,6 +278,11 @@ class Hero {
       case "stop-shot-left":
         this.side = "left";
         this.image = this.image28;
+        break;
+      case "shot-down":
+        if (frames % 10 === 0)
+          this.image =
+            this.image === this.image40 ? this.image41 : this.image40;
         break;
     }
     if (this.jump) {
