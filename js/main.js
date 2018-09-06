@@ -2,7 +2,8 @@ var canvas = document.getElementById("canvas");
 var ctx = canvas.getContext("2d");
 var interval;
 var frames = 0;
-var gravity = 0.10;
+var gravity = 0.05;
+var keys = {};
 
 class Background {
   constructor() {
@@ -87,6 +88,38 @@ class Hero {
     this.image22.src = "./images/hero/hero_stop-izq.png";
     this.image23 = new Image();
     this.image23.src = "./images/hero/hero_up-izq.png";
+    this.image24 = new Image();
+    this.image24.src = "./images/hero/shot/shot1.png";
+    this.image25 = new Image();
+    this.image25.src = "./images/hero/shot/shot2.png";
+    this.image26 = new Image();
+    this.image26.src = "./images/hero/shot/shot3.png";
+    this.image27 = new Image();
+    this.image27.src = "./images/hero/shot/shot4.png";
+    this.image28 = new Image();
+    this.image28.src = "./images/hero/shot/shot1-izq.png";
+    this.image29 = new Image();
+    this.image29.src = "./images/hero/shot/shot2-izq.png";
+    this.image30 = new Image();
+    this.image30.src = "./images/hero/shot/shot3-izq.png";
+    this.image31 = new Image();
+    this.image31.src = "./images/hero/shot/shot4-izq.png";
+    this.image32 = new Image();
+    this.image32.src = "./images/hero/shot/shot-up1.png";
+    this.image33 = new Image();
+    this.image33.src = "./images/hero/shot/shot-up2.png";
+    this.image34 = new Image();
+    this.image34.src = "./images/hero/shot/shot-up3.png";
+    this.image35 = new Image();
+    this.image35.src = "./images/hero/shot/shot-up4.png";
+    this.image36 = new Image();
+    this.image36.src = "./images/hero/shot/shot-up1-izq.png";
+    this.image37 = new Image();
+    this.image37.src = "./images/hero/shot/shot-up2-izq.png";
+    this.image38 = new Image();
+    this.image38.src = "./images/hero/shot/shot-up3-izq.png";
+    this.image39 = new Image();
+    this.image39.src = "./images/hero/shot/shot-up4-izq.png";
     this.image = this.image1;
     this.action = "stop";
   }
@@ -117,6 +150,42 @@ class Hero {
       case "see-up-left":
         this.image = this.image23;
         this.side = "left";
+        break;
+      case "shot-up-right":
+        if (frames % 10 === 0) {
+          switch (this.image) {
+            case this.image32:
+              this.image = this.image33;
+              break;
+            case this.image33:
+              this.image = this.image34;
+              break;
+            case this.image34:
+              this.image = this.image35;
+              break;
+            default:
+              this.image = this.image32;
+              break;
+          }
+        }
+        break;
+      case "shot-up-left":
+        if (frames % 10 === 0) {
+          switch (this.image) {
+            case this.image36:
+              this.image = this.image37;
+              break;
+            case this.image37:
+              this.image = this.image38;
+              break;
+            case this.image38:
+              this.image = this.image39;
+              break;
+            default:
+              this.image = this.image36;
+              break;
+          }
+        }
         break;
       case "left":
         this.side = "left";
@@ -192,6 +261,52 @@ class Hero {
           }
         }
         break;
+      case "shot-right":
+        this.side = "right";
+        if (frames % 10 === 0) {
+          switch (this.image) {
+            case this.image24:
+              this.image = this.image25;
+              break;
+            case this.image25:
+              this.image = this.image26;
+              break;
+            case this.image26:
+              this.image = this.image27;
+              break;
+            default:
+              this.image = this.image24;
+              break;
+          }
+        }
+        break;
+      case "stop-shot-right":
+        this.side = "right";
+        this.image = this.image24;
+        break;
+      case "shot-left":
+        this.side = "left";
+        if (frames % 10 === 0) {
+          switch (this.image) {
+            case this.image28:
+              this.image = this.image29;
+              break;
+            case this.image29:
+              this.image = this.image30;
+              break;
+            case this.image30:
+              this.image = this.image31;
+              break;
+            default:
+              this.image = this.image28;
+              break;
+          }
+        }
+        break;
+      case "stop-shot-left":
+        this.side = "left";
+        this.image = this.image28;
+        break;
     }
     if (this.jump) {
       this.jump = false;
@@ -236,6 +351,7 @@ function restart() {
 }
 
 addEventListener("keyup", function(e) {
+  keys[e.keyCode] = false;
   if (hero.side == "left") {
     hero.action = "stop-left";
     return;
@@ -244,36 +360,84 @@ addEventListener("keyup", function(e) {
 });
 
 addEventListener("keydown", function(e) {
-  switch (e.keyCode) {
-    //Saltar
-    case 32:
-      hero.y -= 150;
-      hero.jump = true;
-      break;
-    //Ir izquierda
-    case 37:
-      hero.x > 10 ? (hero.x -= 5) : (hero.x = 10);
-      hero.action = "left";
-      break;
-    //Mirar arriba
-    case 38:
-      if (hero.side == "left") {
-        hero.action = "see-up-left";
+  keys[e.keyCode] = true;
+  //Saltar
+  if (keys[32]) {
+    hero.y -= 250;
+    hero.jump = true;
+  }
+  //Disparar arriba
+  if (keys[38] && keys[83]) {
+    if (hero.side == "left") {
+      hero.action = "shot-up-left";
+      return;
+    }
+    hero.action = "shot-up-right";
+    return;
+  }
+  //Ir izquierda
+  if (keys[37]) {
+    hero.x > 10 ? (hero.x -= 5) : (hero.x = 10);
+    hero.action = "left";
+  }
+  //Mirar arriba
+  if (keys[38]) {
+    if (hero.side == "left") {
+      hero.action = "see-up-left";
+      return;
+    }
+    hero.action = "see-up";
+  }
+  //Ir derecha
+  if (keys[39]) {
+    //Bajar escaleras
+    if (hero.y < 440 && hero.x < 140) {
+      hero.y += 10;
+    }
+    hero.x < canvas.width - hero.width
+      ? (hero.x += 5)
+      : (hero.x = canvas.width - hero.width);
+    hero.action = "right";
+  }
+  //Saltar y avanzar derecha
+  if (keys[32] && keys[39]) {
+    console.log(hero.x);
+    console.log(hero.vx);
+    if (hero.jump) {
+      hero.x < canvas.width - hero.width
+        ? (hero.vx = 2)
+        : (hero.x = canvas.width - hero.width);
+      return;
+    }
+    hero.vx = 0;
+  }
+  //Saltar y avanzar izquierda
+  if (keys[32] && keys[37]) {
+    console.log(hero.x);
+    console.log(hero.vx);
+    if (hero.jump) {
+      hero.x > 10 ? (hero.vx = -2) : (hero.x = 10);
+      return;
+    }
+    hero.vx = 0;
+  }
+  //Disparar
+  if (keys[83]) {
+    if (hero.side == "left") {
+      //Disparo detenido
+      if (!keys[37] && !keys[39]) {
+        hero.action = "stop-shot-left";
         return;
       }
-      hero.action = "see-up";
-      break;
-    //Ir derecha
-    case 39:
-      //Bajar escaleras
-      if (hero.y < 440 && hero.x < 140) {
-        hero.y += 10;
-      }
-      hero.x < canvas.width - hero.width
-        ? (hero.x += 5)
-        : (hero.x = canvas.width - hero.width);
-      hero.action = "right";
-      break;
+      hero.action = "shot-left";
+      return;
+    }
+    //Disparo detenido
+    if (!keys[37] && !keys[39]) {
+      hero.action = "stop-shot-right";
+      return;
+    }
+    hero.action = "shot-right";
   }
 });
 
