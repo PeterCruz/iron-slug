@@ -124,6 +124,7 @@ class Hero {
         this.side = "left";
         break;
       case "shot-up-right":
+        this.side = "up";
         if (frames % 10 === 0) {
           switch (this.image) {
             case this.image32:
@@ -142,6 +143,7 @@ class Hero {
         }
         break;
       case "shot-up-left":
+        this.side = "up";
         if (frames % 10 === 0) {
           switch (this.image) {
             case this.image36:
@@ -280,6 +282,7 @@ class Hero {
         this.image = this.image28;
         break;
       case "shot-down":
+        this.side = "down";
         if (frames % 10 === 0)
           this.image =
             this.image === this.image40 ? this.image41 : this.image40;

@@ -10,6 +10,13 @@ class Background {
     this.image2.src = "./images/background/cueva2.png";
   }
 
+  gameOver() {
+    clearInterval(interval);
+    interval = undefined;
+    ctx.font = "30px Avenir";
+    ctx.fillText("Game Over", 190, 180);
+  }
+
   draw() {
     if (this.x < -canvas.width) this.x = 0;
     ctx.drawImage(this.image1, this.x, this.y, this.width, this.height);
@@ -20,5 +27,7 @@ class Background {
       this.width,
       this.height
     );
+    //IMAGEN DE TODO EL MAPA
+    //ctx.drawImage(this.image2, this.x, this.y, this.width * 2.5, this.height * 1.5);
   }
 }

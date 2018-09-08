@@ -4,7 +4,8 @@ var interval;
 var frames = 0;
 var gravity = 0.05;
 var keys = {};
-var maxMummies = 5;
+var maxMummies = 1;
+var shots = [];
 
 //Instancias
 var fondo = new Background();
@@ -22,6 +23,7 @@ function update() {
   hero.draw();
   generateMummies();
   drawingMummies();
+  drawingShots();
 }
 
 function restart() {
@@ -36,6 +38,7 @@ addEventListener("keyup", function(e) {
     hero.action = "stop-left";
     return;
   }
+  //NOTA AQUI DEBE REGRESAR AL ESTADO INMEDIATO ANTERIOR
   hero.action = "stop";
 });
 
@@ -53,10 +56,12 @@ addEventListener("keydown", function(e) {
   // Saltar, apuntar abajo y disparar
   if (keys[32] && keys[40] && keys[83]) {
     hero.action = "shot-down";
+    generateShots();
     return;
   }
   //Disparar arriba
   if (keys[38] && keys[83]) {
+    generateShots();
     if (hero.side == "left") {
       hero.action = "shot-up-left";
       return;
@@ -107,6 +112,7 @@ addEventListener("keydown", function(e) {
   //Disparar
   if (keys[83]) {
     if (hero.side == "left") {
+      generateShots();
       //Disparo detenido
       if (!keys[37] && !keys[39]) {
         hero.action = "stop-shot-left";
@@ -115,6 +121,7 @@ addEventListener("keydown", function(e) {
       hero.action = "shot-left";
       return;
     }
+    generateShots();
     //Disparo detenido
     if (!keys[37] && !keys[39]) {
       hero.action = "stop-shot-right";
