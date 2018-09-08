@@ -4,6 +4,7 @@ var interval;
 var frames = 0;
 var gravity = 0.05;
 var keys = {};
+var maxMummies = 5;
 
 //Instancias
 var fondo = new Background();
@@ -19,13 +20,8 @@ function update() {
   ctx.clearRect(0, 0, canvas.width, canvas.height);
   fondo.draw();
   hero.draw();
-}
-
-function gameOver() {
-  clearInterval(interval);
-  interval = undefined;
-  ctx.font = "30px Avenir";
-  ctx.fillText("Game Over", 190, 180);
+  generateMummies();
+  drawingMummies();
 }
 
 function restart() {
