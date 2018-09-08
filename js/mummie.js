@@ -174,9 +174,9 @@ class Mummie {
 
     if (frames % 10 == 0) {
       if (this.action == "left") {
-        this.x--;
+        this.x -= 5;
       } else {
-        this.x++;
+        this.x += 5;
       }
     }
     ctx.drawImage(this.image, this.x, this.y, this.width, this.height);
@@ -188,7 +188,6 @@ class Mummie {
     } else {
       this.action = "left";
     }
-    this.draw();
   }
 }
 
