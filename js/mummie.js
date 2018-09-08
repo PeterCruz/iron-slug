@@ -1,6 +1,6 @@
 class Mummie {
   constructor() {
-    this.y = 450;
+    this.y = 430;
     this.width = 60;
     this.height = 90;
     this.image1 = new Image();
