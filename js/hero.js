@@ -98,10 +98,10 @@ class Hero {
 
   collision(item) {
     return (
-      this.x < item.x + item.width &&
-      this.x + this.width > item.x &&
+      this.x + this.width * 0.4 < item.x + item.width &&
+      this.x + this.width * 0.2 > item.x &&
       this.y < item.y + item.height &&
-      this.y + this.height > item.y
+      this.y + this.height * 0.3 > item.y
     );
   }
 
