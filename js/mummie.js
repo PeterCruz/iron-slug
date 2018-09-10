@@ -65,6 +65,46 @@ class Mummie {
     this.image29.src = "./images/mummie/momia14-izq.png";
     this.image30 = new Image();
     this.image30.src = "./images/mummie/momia15-izq.png";
+    this.image31 = new Image();
+    this.image31.src = "./images/mummie/dead/momia1-izq.png";
+    this.image32 = new Image();
+    this.image32.src = "./images/mummie/dead/momia2-izq.png";
+    this.image33 = new Image();
+    this.image33.src = "./images/mummie/dead/momia3-izq.png";
+    this.image34 = new Image();
+    this.image34.src = "./images/mummie/dead/momia4-izq.png";
+    this.image35 = new Image();
+    this.image35.src = "./images/mummie/dead/momia5-izq.png";
+    this.image36 = new Image();
+    this.image36.src = "./images/mummie/dead/momia6-izq.png";
+    this.image37 = new Image();
+    this.image37.src = "./images/mummie/dead/momia7-izq.png";
+    this.image38 = new Image();
+    this.image38.src = "./images/mummie/dead/momia8-izq.png";
+    this.image39 = new Image();
+    this.image39.src = "./images/mummie/dead/momia9-izq.png";
+    this.image40 = new Image();
+    this.image40.src = "./images/mummie/dead/momia10-izq.png";
+    this.image41 = new Image();
+    this.image41.src = "./images/mummie/dead/momia1.png";
+    this.image42 = new Image();
+    this.image42.src = "./images/mummie/dead/momia2.png";
+    this.image43 = new Image();
+    this.image43.src = "./images/mummie/dead/momia3.png";
+    this.image44 = new Image();
+    this.image44.src = "./images/mummie/dead/momia4.png";
+    this.image45 = new Image();
+    this.image45.src = "./images/mummie/dead/momia5.png";
+    this.image46 = new Image();
+    this.image46.src = "./images/mummie/dead/momia6.png";
+    this.image47 = new Image();
+    this.image47.src = "./images/mummie/dead/momia7.png";
+    this.image48 = new Image();
+    this.image48.src = "./images/mummie/dead/momia8.png";
+    this.image49 = new Image();
+    this.image49.src = "./images/mummie/dead/momia9.png";
+    this.image50 = new Image();
+    this.image50.src = "./images/mummie/dead/momia10.png";
     this.action = "stop";
   }
 
@@ -79,6 +119,78 @@ class Mummie {
 
   draw() {
     switch (this.action) {
+      case "dead-left":
+        if (frames % 10 === 0) {
+          switch (this.image) {
+            case this.image31:
+              this.image = this.image32;
+              break;
+            case this.image32:
+              this.image = this.image33;
+              break;
+            case this.image33:
+              this.image = this.image34;
+              break;
+            case this.image34:
+              this.image = this.image35;
+              break;
+            case this.image35:
+              this.image = this.image36;
+              break;
+            case this.image36:
+              this.image = this.image37;
+              break;
+            case this.image37:
+              this.image = this.image38;
+              break;
+            case this.image38:
+              this.image = this.image39;
+              break;
+            case this.image39:
+              this.image = this.image40;
+              break;
+            default:
+              this.image = this.image31;
+              break;
+          }
+        }
+        break;
+      case "dead-right":
+        if (frames % 10 === 0) {
+          switch (this.image) {
+            case this.image41:
+              this.image = this.image42;
+              break;
+            case this.image42:
+              this.image = this.image43;
+              break;
+            case this.image43:
+              this.image = this.image44;
+              break;
+            case this.image44:
+              this.image = this.image45;
+              break;
+            case this.image45:
+              this.image = this.image46;
+              break;
+            case this.image46:
+              this.image = this.image47;
+              break;
+            case this.image47:
+              this.image = this.image48;
+              break;
+            case this.image48:
+              this.image = this.image49;
+              break;
+            case this.image49:
+              this.image = this.image50;
+              break;
+            default:
+              this.image = this.image41;
+              break;
+          }
+        }
+        break;
       case "right":
         if (frames % 10 === 0) {
           switch (this.image) {
@@ -184,6 +296,9 @@ class Mummie {
     }
 
     if (frames % 10 == 0) {
+      if (this.action == "dead-left" || this.action == "dead-right") {
+        return;
+      }
       if (this.action == "left") {
         this.x -= 5;
       } else {
@@ -194,6 +309,9 @@ class Mummie {
   }
 
   getDirection() {
+    if (this.action == "dead-left" || this.action == "dead-right") {
+      return;
+    }
     if (hero.x > this.x) {
       this.action = "right";
     } else {
@@ -205,7 +323,13 @@ class Mummie {
     let mummie = mummies[index];
     mummie.health -= mummie.damage;
     if (mummie.health < 1) {
-      mummies.splice(index, 1);
+      mummie.action =
+        mummie.action == "left" || mummie.action == "dead-left"
+          ? "dead-left"
+          : "dead-right";
+      setTimeout(function() {
+        mummies.splice(index, 1);
+      }, 1500);
     }
   }
 }
@@ -227,10 +351,11 @@ function drawingMummies() {
     mummie.getDirection();
     mummie.draw();
     if (hero.collision(mummie)) {
+      hero.action = hero.side == "left" ? "dead-left" : "dead-right";
       fondo.gameOver();
     }
     shots.forEach(function(shot, indexShot) {
-      if(mummie.collision(shot)) {
+      if (mummie.collision(shot)) {
         mummie.receiveDamages(indexMummie);
         shots.splice(indexShot, 1);
       }

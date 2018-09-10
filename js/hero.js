@@ -92,6 +92,14 @@ class Hero {
     this.image40.src = "./images/hero/shot/shot-down1.png";
     this.image41 = new Image();
     this.image41.src = "./images/hero/shot/shot-down2.png";
+    this.image42 = new Image();
+    this.image42.src = "./images/hero/dead/muerto1-izq.png";
+    this.image43 = new Image();
+    this.image43.src = "./images/hero/dead/muerto2-izq.png";
+    this.image44 = new Image();
+    this.image44.src = "./images/hero/dead/muerto1.png";
+    this.image45 = new Image();
+    this.image45.src = "./images/hero/dead/muerto2.png";
     this.image = this.image1;
     this.action = "stop";
   }
@@ -107,6 +115,28 @@ class Hero {
 
   draw() {
     switch (this.action) {
+      case "dead-left":
+        this.width = 60;
+        this.height = 95;
+        this.side = "left";
+        if (frames % 10 === 0) {
+          this.image =
+            this.image != this.image42 && this.image != this.image43
+              ? this.image42
+              : this.image43;
+        }
+        break;
+      case "dead-right":
+        this.width = 60;
+        this.height = 95;
+        this.side = "right";
+        if (frames % 10 === 0) {
+          this.image =
+            this.image != this.image44 && this.image != this.image45
+              ? this.image44
+              : this.image45;
+        }
+        break;
       case "stop":
         this.width = 60;
         this.height = 90;
