@@ -66,6 +66,15 @@ class Mummie {
     this.action = "stop";
   }
 
+  collision(item) {
+    return (
+      this.x < item.x + item.width &&
+      this.x + this.width > item.x &&
+      this.y < item.y + item.height &&
+      this.y + this.height > item.y
+    );
+  }
+
   draw() {
     switch (this.action) {
       case "right":
@@ -210,5 +219,11 @@ function drawingMummies() {
     if (hero.collision(mummie)) {
       fondo.gameOver();
     }
+    shots.forEach(function(shot, index) {
+      if(mummie.collision(shot)) {
+        console.log('mummie afectada');
+        shots.splice(index, 1);
+      }
+    });
   });
 }
