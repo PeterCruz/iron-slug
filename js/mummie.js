@@ -3,6 +3,8 @@ class Mummie {
     this.y = 430;
     this.width = 60;
     this.height = 90;
+    this.health = 100;
+    this.damage = 20;
     this.image1 = new Image();
     this.image1.src = "./images/mummie/momia1.png";
     this.image2 = new Image();
@@ -198,6 +200,14 @@ class Mummie {
       this.action = "left";
     }
   }
+
+  receiveDamages(index) {
+    let mummie = mummies[index];
+    mummie.health -= mummie.damage;
+    if (mummie.health < 1) {
+      mummies.splice(index, 1);
+    }
+  }
 }
 
 var mummies = [];
@@ -213,16 +223,16 @@ function generateMummies() {
 }
 
 function drawingMummies() {
-  mummies.forEach(function(mummie) {
+  mummies.forEach(function(mummie, indexMummie) {
     mummie.getDirection();
     mummie.draw();
     if (hero.collision(mummie)) {
       fondo.gameOver();
     }
-    shots.forEach(function(shot, index) {
+    shots.forEach(function(shot, indexShot) {
       if(mummie.collision(shot)) {
-        console.log('mummie afectada');
-        shots.splice(index, 1);
+        mummie.receiveDamages(indexMummie);
+        shots.splice(indexShot, 1);
       }
     });
   });
