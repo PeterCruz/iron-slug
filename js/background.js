@@ -11,10 +11,7 @@ class Background {
   }
 
   gameOver() {
-    clearInterval(interval);
-    interval = undefined;
-    ctx.font = "30px Avenir";
-    ctx.fillText("Game Over", 190, 180);
+    setTimeout(gameOverMessage, 1000);
   }
 
   draw() {
@@ -30,4 +27,12 @@ class Background {
     //IMAGEN DE TODO EL MAPA
     //ctx.drawImage(this.image2, this.x, this.y, this.width * 2.5, this.height * 1.5);
   }
+}
+
+function gameOverMessage() {
+  clearInterval(interval);
+  interval = undefined;
+  ctx.font = "50px Avenir";
+  ctx.fillStyle = "white";
+  ctx.fillText("Game Over", 190, 180);
 }
