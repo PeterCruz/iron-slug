@@ -1,3 +1,8 @@
+.principal {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
 .container {
     width: 1500px;
     margin: 20px auto;
