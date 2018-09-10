@@ -97,9 +97,5 @@ function generateShots() {
 function drawingShots() {
   shots.forEach(function(shot) {
     shot.draw();
-    /*if (mummie.collision(shot)) {
-      shots.splice(shot);
-      console.log('Momia destruida');
-    }*/
   });
 }
