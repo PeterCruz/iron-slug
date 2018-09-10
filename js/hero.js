@@ -108,22 +108,32 @@ class Hero {
   draw() {
     switch (this.action) {
       case "stop":
+        this.width = 60;
+        this.height = 90;
         this.image = this.image0;
         this.side = "right";
         break;
       case "stop-left":
+        this.width = 60;
+        this.height = 90;
         this.image = this.image22;
         this.side = "left";
         break;
       case "see-up":
+        this.width = 60;
+        this.height = 95;
         this.image = this.image11;
         this.side = "right";
         break;
       case "see-up-left":
+        this.width = 60;
+        this.height = 95;
         this.image = this.image23;
         this.side = "left";
         break;
       case "shot-up-right":
+        this.width = 60;
+        this.height = 90;
         this.side = "up";
         if (frames % 10 === 0) {
           switch (this.image) {
@@ -143,6 +153,8 @@ class Hero {
         }
         break;
       case "shot-up-left":
+        this.width = 60;
+        this.height = 95;
         this.side = "up";
         if (frames % 10 === 0) {
           switch (this.image) {
@@ -162,6 +174,8 @@ class Hero {
         }
         break;
       case "left":
+        this.width = 60;
+        this.height = 90;
         this.side = "left";
         if (frames % 5 === 0) {
           switch (this.image) {
@@ -199,6 +213,8 @@ class Hero {
         }
         break;
       case "right":
+        this.width = 60;
+        this.height = 90;
         this.side = "right";
         if (frames % 5 === 0) {
           switch (this.image) {
@@ -236,6 +252,8 @@ class Hero {
         }
         break;
       case "shot-right":
+        this.width = 90;
+        this.height = 90;
         this.side = "right";
         if (frames % 10 === 0) {
           switch (this.image) {
@@ -255,10 +273,14 @@ class Hero {
         }
         break;
       case "stop-shot-right":
+        this.width = 90;
+        this.height = 90;
         this.side = "right";
         this.image = this.image24;
         break;
       case "shot-left":
+        this.width = 90;
+        this.height = 90;
         this.side = "left";
         if (frames % 10 === 0) {
           switch (this.image) {
@@ -278,10 +300,14 @@ class Hero {
         }
         break;
       case "stop-shot-left":
+        this.width = 90;
+        this.height = 90;
         this.side = "left";
         this.image = this.image28;
         break;
       case "shot-down":
+        this.width = 90;
+        this.height = 90;
         this.side = "down";
         if (frames % 10 === 0)
           this.image =
