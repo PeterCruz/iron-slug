@@ -4,7 +4,7 @@ var interval;
 var frames = 0;
 var gravity = 0.05;
 var keys = {};
-var maxMummies = 1;
+var maxMummies = 5;
 var shots = [];
 
 //Instancias
