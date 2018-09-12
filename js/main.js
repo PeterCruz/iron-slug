@@ -4,7 +4,7 @@ var interval;
 var frames = 0;
 var gravity = 0.05;
 var keys = {};
-var maxMummies = 0;
+var maxMummies = 3;
 var shots = [];
 var stage = 1;
 
@@ -44,6 +44,7 @@ addEventListener("keyup", function(e) {
 });
 
 addEventListener("keydown", function(e) {
+  console.log(hero.x, hero.y);
   keys[e.keyCode] = true;
   //Saltar
   if (keys[32]) {
@@ -156,6 +157,7 @@ addEventListener("keydown", function(e) {
         hero.x = 0;
         hero.y = 400;
         hero.location = "second-stage";
+        deleteMummies();
       }, 1000);
       return;
     }

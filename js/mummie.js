@@ -301,8 +301,12 @@ class Mummie {
       }
       if (this.action == "left") {
         this.x -= 5;
+        if (stage == 2) {
+          if (this.x > 240) this.y += 1;
+        }
       } else {
         this.x += 5;
+        if (this.x > 240) this.y -= 1;
       }
     }
     ctx.drawImage(this.image, this.x, this.y, this.width, this.height);
@@ -340,9 +344,26 @@ function generateMummies() {
   if (mummies.length < maxMummies) {
     if (frames % 100 === 0 || frames % 70 === 0 || frames % 170 == 0) {
       let mummie = new Mummie();
-      mummie.x = Math.floor(Math.random() * canvas.width - 100 + 50);
+      mummie.x = Math.floor(Math.random() * (canvas.width - 100) + 50);
+      //Momias de escenario 2
+      if (stage == 2) {
+        mummie.x = Math.floor(Math.random() * (canvas.width - 100) + 270);
+        let min = 0;
+        let max = 0;
+        if (mummie.x > 800) {
+          min = 165;
+          max = 288;
+        } else {
+          min = 280;
+          max = 385;
+        }
+        mummie.y = Math.floor(Math.random() * (max - min)) + min;
+        console.log('mummie', mummie.x, mummie.y);
+      }
       //Que no aparezcan sobre el heroe
-      if(mummie.x < hero.x - 30 || mummie.x > hero.x + hero.width + 30) mummies.push(mummie);
+      if (mummie.x < hero.x - 30 || mummie.x > hero.x + hero.width + 30) {
+        mummies.push(mummie);
+      }
     }
   }
 }
@@ -362,4 +383,8 @@ function drawingMummies() {
       }
     });
   });
+}
+
+function deleteMummies() {
+  mummies.splice(0,mummies.length);
 }
