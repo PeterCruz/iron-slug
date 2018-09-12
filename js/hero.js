@@ -102,6 +102,7 @@ class Hero {
     this.image45.src = "./images/hero/dead/muerto2.png";
     this.image = this.image1;
     this.action = "stop";
+    this.location = '';
   }
 
   collision(item) {
