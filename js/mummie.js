@@ -341,7 +341,8 @@ function generateMummies() {
     if (frames % 100 === 0 || frames % 70 === 0 || frames % 170 == 0) {
       let mummie = new Mummie();
       mummie.x = Math.floor(Math.random() * canvas.width - 100 + 50);
-      mummies.push(mummie);
+      //Que no aparezcan sobre el heroe
+      if(mummie.x < hero.x - 30 || mummie.x > hero.x + hero.width + 30) mummies.push(mummie);
     }
   }
 }

@@ -4,7 +4,7 @@ var interval;
 var frames = 0;
 var gravity = 0.05;
 var keys = {};
-var maxMummies = 3;
+var maxMummies = 0;
 var shots = [];
 var stage = 1;
 
@@ -56,19 +56,27 @@ addEventListener("keydown", function(e) {
       hero.x < 1160 &&
       hero.y <= 445 &&
       hero.y >= 260 &&
-      hero.location != 'first-rock'
+      hero.location != "first-rock"
     ) {
       hero.jump = true;
       hero.limitToJump = 260;
-      hero.location = 'first-rock';
+      hero.location = "first-rock";
       return;
     }
 
     //Evitar que se salga de la pantalla
-    if (hero.y > 200) {
+    if (stage == 1 && hero.y > 200) {
       hero.y -= 250;
       hero.jump = true;
     }
+
+    //Salto en segundo escenario
+    if (stage == 2 && hero.y > 200) {
+      let temp = hero.y;
+      hero.y -= 250;
+      hero.jump = true;
+      hero.limitToJump = temp;
+  }
   }
   // Saltar, apuntar abajo y disparar
   if (keys[32] && keys[40] && keys[83]) {
@@ -88,14 +96,21 @@ addEventListener("keydown", function(e) {
   }
   //Ir izquierda
   if (keys[37]) {
-    hero.x > 10 ? (hero.x -= 5) : (hero.x = 10);
+    if (hero.x > 10) {
+      hero.x -= 5
+      if (stage == 2) {
+        if (hero.x > 240) hero.y += 1;
+      }
+    } else {
+      hero.x = 10;
+    }
     hero.action = "left";
 
     //Caerse de la piedra
-    if (hero.location == 'first-rock' && hero.x >= 1018 && hero.x < 1023) {
+    if (hero.location == "first-rock" && hero.x >= 1018 && hero.x < 1023) {
       hero.jump = true;
       hero.limitToJump = 430;
-      hero.location = 'floor';
+      hero.location = "floor";
     }
   }
   //Mirar arriba
@@ -112,21 +127,27 @@ addEventListener("keydown", function(e) {
     if (stage == 1 && hero.y < 440 && hero.x < 140) {
       hero.y += 10;
     }
-    hero.x < canvas.width - hero.width
-      ? (hero.x += 5)
-      : (hero.x = canvas.width - hero.width);
+    //Avanzar en segundo escenario
+    if (hero.x < canvas.width - hero.width) {
+      hero.x += 5;
+      if (stage == 2) {
+        if (hero.x > 240) hero.y -= 1;
+      }
+    } else {
+      hero.x = canvas.width - hero.width;
+    }
     hero.action = "right";
 
     //Caerse de la piedra
-    if (hero.location == 'first-rock' && hero.x >= 1125 && hero.x < 1150) {
+    if (hero.location == "first-rock" && hero.x >= 1125 && hero.x < 1150) {
       hero.jump = true;
       hero.limitToJump = 430;
-      hero.location = 'floor';
+      hero.location = "floor";
     }
   }
   //Saltar y avanzar derecha
   if (keys[32] && keys[39]) {
-    if(hero.location == 'first-rock') {
+    if (stage == 1 && hero.location == "first-rock") {
       hero.jump = true;
       hero.limitToJump = 140;
       hero.x = 1205;
@@ -134,7 +155,7 @@ addEventListener("keydown", function(e) {
         stage = 2;
         hero.x = 0;
         hero.y = 400;
-        hero.location == 'second-stage';
+        hero.location = "second-stage";
       }, 1000);
       return;
     }
@@ -149,7 +170,14 @@ addEventListener("keydown", function(e) {
   //Saltar y avanzar izquierda
   if (keys[32] && keys[37]) {
     if (hero.jump) {
-      hero.x > 10 ? (hero.vx = -3) : (hero.x = 10);
+      if (hero.x > 10) {
+        hero.vx = -3
+        if (stage == 2) {
+          if (hero.x > 240) hero.vy += 3;
+        }
+      } else {
+        hero.x = 10;
+      }
       return;
     }
   }

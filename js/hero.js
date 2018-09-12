@@ -348,11 +348,14 @@ class Hero {
     }
     if (this.jump) {
       this.jump = false;
-      if (this.y < this.limitToJump) {
-        this.vy += gravity;
+      this.vy += gravity;
+      this.x += this.vx;
+      if (this.y + this.vy < this.limitToJump) {
         this.y += this.vy;
-        this.x += this.vx;
         this.jump = true;
+      } else {
+        this.y = this.limitToJump;
+        this.jump = false;
       }
     }
     ctx.drawImage(this.image, this.x, this.y, this.width, this.height);

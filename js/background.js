@@ -16,23 +16,23 @@ class Background {
   }
 
   gameOver() {
-    setTimeout(gameOverMessage, 1000);
+    setTimeout(gameOverMessage, 500);
   }
 
   draw(stage) {
     switch(stage) {
       case 1:
-      this.stage = this.image1;
-      break;
+        this.stage = this.image1;
+        break;
       case 2:
-      this.stage = this.image2;
-      break;
+        this.stage = this.image2;
+        break;
       case 3:
-      this.stage = this.image3;
-      break;
+        this.stage = this.image3;
+        break;
       case 4:
-      this.stage = this.image4;
-      break;
+        this.stage = this.image4;
+        break;
     }
     if (this.x < -canvas.width) this.x = 0;
     ctx.drawImage(this.stage, this.x, this.y, this.width, this.height);

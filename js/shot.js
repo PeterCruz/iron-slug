@@ -95,7 +95,16 @@ function generateShots() {
 }
 
 function drawingShots() {
-  shots.forEach(function(shot) {
+  shots.forEach(function(shot, index) {
     shot.draw();
+    //Eliminar shots fuera del escenario
+    if (
+      shot.x > canvas.width ||
+      shot.x < canvas.x ||
+      shot.y > canvas.height ||
+      shot.x < canvas.y
+    ) {
+      shots.splice(index, 1);
+    }
   });
 }
