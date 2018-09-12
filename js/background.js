@@ -8,24 +8,34 @@ class Background {
     this.image1.src = "./images/background/cueva1.png";
     this.image2 = new Image();
     this.image2.src = "./images/background/cueva2.png";
+    this.image3 = new Image();
+    this.image3.src = "./images/background/cueva3.png";
+    this.image4 = new Image();
+    this.image4.src = "./images/background/cueva4.png";
+    this.stage = this.image1;
   }
 
   gameOver() {
     setTimeout(gameOverMessage, 1000);
   }
 
-  draw() {
+  draw(stage) {
+    switch(stage) {
+      case 1:
+      this.stage = this.image1;
+      break;
+      case 2:
+      this.stage = this.image2;
+      break;
+      case 3:
+      this.stage = this.image3;
+      break;
+      case 4:
+      this.stage = this.image4;
+      break;
+    }
     if (this.x < -canvas.width) this.x = 0;
-    ctx.drawImage(this.image1, this.x, this.y, this.width, this.height);
-    ctx.drawImage(
-      this.image2,
-      this.x + this.width,
-      this.y,
-      this.width,
-      this.height
-    );
-    //IMAGEN DE TODO EL MAPA
-    //ctx.drawImage(this.image2, this.x, this.y, this.width * 2.5, this.height * 1.5);
+    ctx.drawImage(this.stage, this.x, this.y, this.width, this.height);
   }
 }
 
