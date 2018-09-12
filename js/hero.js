@@ -102,7 +102,8 @@ class Hero {
     this.image45.src = "./images/hero/dead/muerto2.png";
     this.image = this.image1;
     this.action = "stop";
-    this.location = '';
+    this.location = 'floor';
+    this.limitToJump = canvas.height - 280;
   }
 
   collision(item) {
@@ -347,7 +348,7 @@ class Hero {
     }
     if (this.jump) {
       this.jump = false;
-      if (this.y < canvas.height - 280) {
+      if (this.y < this.limitToJump) {
         this.vy += gravity;
         this.y += this.vy;
         this.x += this.vx;

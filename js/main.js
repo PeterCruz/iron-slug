@@ -4,7 +4,7 @@ var interval;
 var frames = 0;
 var gravity = 0.05;
 var keys = {};
-var maxMummies = 5;
+var maxMummies = 3;
 var shots = [];
 var stage = 1;
 
@@ -20,7 +20,6 @@ function start() {
 function update() {
   frames++;
   ctx.clearRect(0, 0, canvas.width, canvas.height);
-  checkHeroPosition();
   fondo.draw(stage);
   hero.draw();
   generateMummies();
@@ -32,12 +31,6 @@ function restart() {
   if (interval !== undefined) return;
   frames = 0;
   start();
-}
-
-function checkHeroPosition() {
-  if (stage == 1 && hero.x)
-    if (hero.x > canvas.width - 20)
-      stage++;
 }
 
 addEventListener("keyup", function(e) {
@@ -55,18 +48,18 @@ addEventListener("keydown", function(e) {
   //Saltar
   if (keys[32]) {
     hero.vx = 0;
-
     //Subir a la primer piedra
     //Solo cuando este en stop y abajo de la piedra
     if (
       stage == 1 &&
       hero.x > 1070 &&
       hero.x < 1160 &&
-      hero.y <= 430 &&
+      hero.y <= 445 &&
       hero.y >= 260 &&
       hero.location != 'first-rock'
     ) {
-      hero.y = 260;
+      hero.jump = true;
+      hero.limitToJump = 260;
       hero.location = 'first-rock';
       return;
     }
@@ -75,7 +68,6 @@ addEventListener("keydown", function(e) {
     if (hero.y > 200) {
       hero.y -= 250;
       hero.jump = true;
-      hero.location = '';
     }
   }
   // Saltar, apuntar abajo y disparar
@@ -100,8 +92,9 @@ addEventListener("keydown", function(e) {
     hero.action = "left";
 
     //Caerse de la piedra
-    if (stage == 1 && hero.x >= 1018 && hero.x < 1023 && hero.y == 260) {
-      hero.y = 430;
+    if (hero.location == 'first-rock' && hero.x >= 1018 && hero.x < 1023) {
+      hero.jump = true;
+      hero.limitToJump = 430;
       hero.location = 'floor';
     }
   }
@@ -116,7 +109,7 @@ addEventListener("keydown", function(e) {
   //Ir derecha
   if (keys[39]) {
     //Bajar escaleras
-    if (hero.y < 440 && hero.x < 140) {
+    if (stage == 1 && hero.y < 440 && hero.x < 140) {
       hero.y += 10;
     }
     hero.x < canvas.width - hero.width
@@ -125,15 +118,25 @@ addEventListener("keydown", function(e) {
     hero.action = "right";
 
     //Caerse de la piedra
-    if (stage == 1 && hero.x >= 1125 && hero.x < 1150 && hero.y == 260) {
-      hero.y = 430;
+    if (hero.location == 'first-rock' && hero.x >= 1125 && hero.x < 1150) {
+      hero.jump = true;
+      hero.limitToJump = 430;
       hero.location = 'floor';
     }
   }
   //Saltar y avanzar derecha
   if (keys[32] && keys[39]) {
     if(hero.location == 'first-rock') {
-
+      hero.jump = true;
+      hero.limitToJump = 140;
+      hero.x = 1205;
+      this.setTimeout(function() {
+        stage = 2;
+        hero.x = 0;
+        hero.y = 400;
+        hero.location == 'second-stage';
+      }, 1000);
+      return;
     }
 
     if (hero.jump) {
