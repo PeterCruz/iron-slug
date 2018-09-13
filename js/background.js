@@ -12,6 +12,8 @@ class Background {
     this.image3.src = "./images/background/cueva3.png";
     this.image4 = new Image();
     this.image4.src = "./images/game-over.png";
+    this.image5 = new Image();
+    this.image5.src = "./images/completed.png";
     this.stage = this.image1;
   }
 

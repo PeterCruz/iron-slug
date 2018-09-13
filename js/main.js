@@ -4,9 +4,24 @@ var interval;
 var frames = 0;
 var gravity = 0.05;
 var keys = {};
-var maxMummies = 2;
+var maxMummies = 5;
 var shots = [];
 var stage = 1;
+var isMusicOff = true;
+
+//Sounds
+var misionMusic = new Audio();
+misionMusic.src = "./music/mision.mp3";
+var startMusic = new Audio();
+startMusic.src = "./music/start.mp3";
+var completedMusic = new Audio();
+completedMusic.src = "./music/completed.mp3";
+var gameOverMusic = new Audio();
+gameOverMusic.src = "./music/game-over.mp3";
+var heroDeadMusic = new Audio();
+heroDeadMusic.src = "./music/hero-dead.mp3";
+var shotMusic = new Audio();
+shotMusic.src = "./music/shot.mp3";
 
 //Instancias
 var fondo = new Background();
@@ -35,6 +50,8 @@ function restart() {
 
 function checkHeroIsDead() {
   if(hero.image == hero.image43 || hero.image == hero.image45) {
+    misionMusic.pause();
+    gameOverMusic.play();
     clearInterval(interval);
     interval = undefined;
     setTimeout(function(){
@@ -49,11 +66,19 @@ addEventListener("keyup", function(e) {
     hero.action = "stop-left";
     return;
   }
+  if(!keys[83]) {
+    shotMusic.pause();
+  }
   //NOTA AQUI DEBE REGRESAR AL ESTADO INMEDIATO ANTERIOR
   hero.action = "stop";
 });
 
 addEventListener("keydown", function(e) {
+  if (isMusicOff) {
+    startMusic.play();
+    misionMusic.play();
+    isMusicOff = false;
+  }
   keys[e.keyCode] = true;
   //Reiniciar el juego
   if (keys[82]) {
@@ -98,12 +123,14 @@ addEventListener("keydown", function(e) {
   }
   // Saltar, apuntar abajo y disparar
   if (keys[32] && keys[40] && keys[83]) {
+    shotMusic.play();
     hero.action = "shot-down";
     generateShots();
     return;
   }
   //Disparar arriba
   if (keys[38] && keys[83]) {
+    shotMusic.play();
     generateShots();
     if (hero.side == "left") {
       hero.action = "shot-up-left";
@@ -177,6 +204,17 @@ addEventListener("keydown", function(e) {
       return;
     }
 
+    //llegar al fin del tercer escenario
+    if (stage == 3 && hero.x > 1420) {
+      misionMusic.pause();
+      completedMusic.play();
+      clearInterval(interval);
+      interval = undefined;
+      setTimeout(function(){
+        ctx.drawImage(fondo.image5, 0, 0, canvas.width, canvas.height);
+      }, 1800);
+    }
+
     hero.action = "right";
 
     //Caerse de la piedra
@@ -226,6 +264,7 @@ addEventListener("keydown", function(e) {
   }
   //Disparar
   if (keys[83]) {
+    shotMusic.play();
     if (hero.side == "left") {
       generateShots();
       //Disparo detenido

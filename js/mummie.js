@@ -398,6 +398,7 @@ function drawingMummies() {
     mummie.draw();
     mummie.checkIsDead(indexMummie);
     if (hero.collision(mummie)) {
+      heroDeadMusic.play();
       hero.isDead = true;
       hero.action = hero.side == "left" ? "dead-left" : "dead-right";
       checkHeroIsDead();
