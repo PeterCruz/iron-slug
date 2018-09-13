@@ -1,15 +1,22 @@
-.principal, .footer {
-    display: flex;
-    align-items: center;
-    justify-content: center;
+.principal,
+.footer {
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 .container {
-    width: 1500px;
-    margin: 20px auto;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+  width: 1500px;
+  margin: 20px auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 canvas {
-    border: #999 1px solid;
+  border: #999 1px solid;
+}
+.footer img:first-child {
+  width: 280px;
+}
+.footer img {
+  margin: 10px 35px;
 }
