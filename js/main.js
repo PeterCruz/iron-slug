@@ -83,7 +83,6 @@ addEventListener("keydown", function(e) {
   }
   // Saltar, apuntar abajo y disparar
   if (keys[32] && keys[40] && keys[83]) {
-    console.log('Holaaaa');
     hero.action = "shot-down";
     generateShots();
     return;

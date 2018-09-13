@@ -305,7 +305,7 @@ class Mummie {
           if (this.x > 240) this.y += 1;
         }
         if (stage == 3) {
-          (this.x > 860 && this.x < 1045) ? this.y += 3 : this.y += 1;
+          this.x > 860 && this.x < 1045 ? (this.y += 3) : (this.y += 1);
         }
       } else {
         this.x += 5;
@@ -313,7 +313,7 @@ class Mummie {
           if (this.x > 240) this.y -= 1;
         }
         if (stage == 3) {
-          (this.x > 860 && this.x < 1045) ? this.y -= 3 : this.y -= 1;
+          this.x > 860 && this.x < 1045 ? (this.y -= 3) : (this.y -= 1);
         }
       }
     }
@@ -339,9 +339,12 @@ class Mummie {
         mummie.action == "left" || mummie.action == "dead-left"
           ? "dead-left"
           : "dead-right";
-      setTimeout(function() {
-        mummies.splice(index, 1);
-      }, 1500);
+    }
+  }
+
+  checkIsDead(index) {
+    if(this.image == this.image40 || this.image == this.image50) {
+      mummies.splice(index, 1);
     }
   }
 }
@@ -349,7 +352,6 @@ class Mummie {
 var mummies = [];
 
 function generateMummies() {
-  console.log(mummies.length, maxMummies);
   if (mummies.length < maxMummies) {
     if (frames % 100 === 0 || frames % 70 === 0 || frames % 170 == 0) {
       let mummie = new Mummie();
@@ -394,6 +396,7 @@ function drawingMummies() {
   mummies.forEach(function(mummie, indexMummie) {
     mummie.getDirection();
     mummie.draw();
+    mummie.checkIsDead(indexMummie);
     if (hero.collision(mummie)) {
       hero.action = hero.side == "left" ? "dead-left" : "dead-right";
       fondo.gameOver();
@@ -408,5 +411,5 @@ function drawingMummies() {
 }
 
 function deleteMummies() {
-  mummies.splice(0,mummies.length);
+  mummies.splice(0, mummies.length);
 }
