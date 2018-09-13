@@ -54,10 +54,13 @@ addEventListener("keyup", function(e) {
 });
 
 addEventListener("keydown", function(e) {
-  //Bloquear cualquier movimiento si ya fue atrapado
-  if(hero.isDead) return;
-
   keys[e.keyCode] = true;
+  //Reiniciar el juego
+  if (keys[82]) {
+    location.reload();
+  }
+  //Bloquear cualquier movimiento si ya fue atrapado
+  if (hero.isDead) return;
   //Saltar
   if (keys[32]) {
     hero.vx = 0;
