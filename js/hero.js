@@ -338,6 +338,8 @@ class Hero {
         this.image = this.image28;
         break;
       case "shot-down":
+      console.log(this.jump);
+      console.log(this.limitToJump);
         this.width = 90;
         this.height = 90;
         this.side = "down";

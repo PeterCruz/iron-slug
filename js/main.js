@@ -4,7 +4,7 @@ var interval;
 var frames = 0;
 var gravity = 0.05;
 var keys = {};
-var maxMummies = 3;
+var maxMummies = 2;
 var shots = [];
 var stage = 1;
 
@@ -66,21 +66,24 @@ addEventListener("keydown", function(e) {
     }
 
     //Evitar que se salga de la pantalla
-    if (stage == 1 && hero.y > 200) {
+    if (hero.y > 200) {
+      switch(stage) {
+        case 1:
+        break;
+        case 2:
+        case 3:
+        let temp = hero.y;
+        hero.jump = true;
+        hero.limitToJump = temp;
+        break;
+      }
       hero.y -= 250;
       hero.jump = true;
     }
-
-    //Salto en segundo escenario
-    if (stage == 2 && hero.y > 200) {
-      let temp = hero.y;
-      hero.y -= 250;
-      hero.jump = true;
-      hero.limitToJump = temp;
-  }
   }
   // Saltar, apuntar abajo y disparar
   if (keys[32] && keys[40] && keys[83]) {
+    console.log('Holaaaa');
     hero.action = "shot-down";
     generateShots();
     return;
@@ -98,9 +101,14 @@ addEventListener("keydown", function(e) {
   //Ir izquierda
   if (keys[37]) {
     if (hero.x > 10) {
-      hero.x -= 5
+      hero.x -= 5;
+      //Avanzar en segundo escenario
       if (stage == 2) {
         if (hero.x > 240) hero.y += 1;
+      }
+      //Avanzar en tercer escenario
+      if (stage == 3) {
+        (hero.x > 860 && hero.x < 1045) ? hero.y += 3 : hero.y += 1;
       }
     } else {
       hero.x = 10;
@@ -128,15 +136,33 @@ addEventListener("keydown", function(e) {
     if (stage == 1 && hero.y < 440 && hero.x < 140) {
       hero.y += 10;
     }
-    //Avanzar en segundo escenario
     if (hero.x < canvas.width - hero.width) {
       hero.x += 5;
+      //Avanzar en segundo escenario
       if (stage == 2) {
         if (hero.x > 240) hero.y -= 1;
+      }
+      //Avanzar en tercer escenario
+      if (stage == 3) {
+        (hero.x > 860 && hero.x < 1045) ? hero.y -= 3 : hero.y -= 1;
       }
     } else {
       hero.x = canvas.width - hero.width;
     }
+
+    //Pasar al stage 3
+    if (stage == 2 && hero.x > 1420) {
+      this.setTimeout(function() {
+        stage = 3;
+        hero.x = 0;
+        hero.y = 480;
+        hero.location = "third-stage";
+        deleteMummies();
+        deleteShots();
+      }, 1000);
+      return;
+    }
+
     hero.action = "right";
 
     //Caerse de la piedra
@@ -158,6 +184,7 @@ addEventListener("keydown", function(e) {
         hero.y = 400;
         hero.location = "second-stage";
         deleteMummies();
+        deleteShots();
       }, 1000);
       return;
     }
@@ -173,7 +200,7 @@ addEventListener("keydown", function(e) {
   if (keys[32] && keys[37]) {
     if (hero.jump) {
       if (hero.x > 10) {
-        hero.vx = -3
+        hero.vx = -3;
         if (stage == 2) {
           if (hero.x > 240) hero.vy += 3;
         }

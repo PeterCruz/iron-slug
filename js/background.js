@@ -10,8 +10,6 @@ class Background {
     this.image2.src = "./images/background/cueva2.png";
     this.image3 = new Image();
     this.image3.src = "./images/background/cueva3.png";
-    this.image4 = new Image();
-    this.image4.src = "./images/background/cueva4.png";
     this.stage = this.image1;
   }
 
@@ -29,9 +27,6 @@ class Background {
         break;
       case 3:
         this.stage = this.image3;
-        break;
-      case 4:
-        this.stage = this.image4;
         break;
     }
     if (this.x < -canvas.width) this.x = 0;

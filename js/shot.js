@@ -108,3 +108,7 @@ function drawingShots() {
     }
   });
 }
+
+function deleteShots() {
+  shots.splice(0,shots.length);
+}

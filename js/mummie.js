@@ -304,9 +304,17 @@ class Mummie {
         if (stage == 2) {
           if (this.x > 240) this.y += 1;
         }
+        if (stage == 3) {
+          (this.x > 860 && this.x < 1045) ? this.y += 3 : this.y += 1;
+        }
       } else {
         this.x += 5;
-        if (this.x > 240) this.y -= 1;
+        if (stage == 2) {
+          if (this.x > 240) this.y -= 1;
+        }
+        if (stage == 3) {
+          (this.x > 860 && this.x < 1045) ? this.y -= 3 : this.y -= 1;
+        }
       }
     }
     ctx.drawImage(this.image, this.x, this.y, this.width, this.height);
@@ -341,6 +349,7 @@ class Mummie {
 var mummies = [];
 
 function generateMummies() {
+  console.log(mummies.length, maxMummies);
   if (mummies.length < maxMummies) {
     if (frames % 100 === 0 || frames % 70 === 0 || frames % 170 == 0) {
       let mummie = new Mummie();
@@ -358,7 +367,20 @@ function generateMummies() {
           max = 385;
         }
         mummie.y = Math.floor(Math.random() * (max - min)) + min;
-        console.log('mummie', mummie.x, mummie.y);
+      }
+      //Momias de escenario 3
+      if (stage == 3) {
+        mummie.x = Math.floor(Math.random() * (canvas.width - 100) + 270);
+        let min = 0;
+        let max = 0;
+        if (mummie.x > 870) {
+          min = 160;
+          max = 300;
+        } else {
+          min = 315;
+          max = 479;
+        }
+        mummie.y = Math.floor(Math.random() * (max - min)) + min;
       }
       //Que no aparezcan sobre el heroe
       if (mummie.x < hero.x - 30 || mummie.x > hero.x + hero.width + 30) {
