@@ -398,8 +398,9 @@ function drawingMummies() {
     mummie.draw();
     mummie.checkIsDead(indexMummie);
     if (hero.collision(mummie)) {
+      hero.isDead = true;
       hero.action = hero.side == "left" ? "dead-left" : "dead-right";
-      fondo.gameOver();
+      checkHeroIsDead();
     }
     shots.forEach(function(shot, indexShot) {
       if (mummie.collision(shot)) {

@@ -10,11 +10,9 @@ class Background {
     this.image2.src = "./images/background/cueva2.png";
     this.image3 = new Image();
     this.image3.src = "./images/background/cueva3.png";
+    this.image4 = new Image();
+    this.image4.src = "./images/game-over.png";
     this.stage = this.image1;
-  }
-
-  gameOver() {
-    setTimeout(gameOverMessage, 500);
   }
 
   draw(stage) {
@@ -32,12 +30,4 @@ class Background {
     if (this.x < -canvas.width) this.x = 0;
     ctx.drawImage(this.stage, this.x, this.y, this.width, this.height);
   }
-}
-
-function gameOverMessage() {
-  clearInterval(interval);
-  interval = undefined;
-  ctx.font = "50px Avenir";
-  ctx.fillStyle = "white";
-  ctx.fillText("Game Over", 190, 180);
 }

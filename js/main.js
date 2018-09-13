@@ -33,6 +33,16 @@ function restart() {
   start();
 }
 
+function checkHeroIsDead() {
+  if(hero.image == hero.image43 || hero.image == hero.image45) {
+    clearInterval(interval);
+    interval = undefined;
+    setTimeout(function(){
+      ctx.drawImage(fondo.image4, 0, 0, canvas.width, canvas.height);
+    }, 1800);
+  }
+}
+
 addEventListener("keyup", function(e) {
   keys[e.keyCode] = false;
   if (hero.side == "left") {
@@ -44,7 +54,9 @@ addEventListener("keyup", function(e) {
 });
 
 addEventListener("keydown", function(e) {
-  console.log(hero.x, hero.y);
+  //Bloquear cualquier movimiento si ya fue atrapado
+  if(hero.isDead) return;
+
   keys[e.keyCode] = true;
   //Saltar
   if (keys[32]) {

@@ -104,6 +104,7 @@ class Hero {
     this.action = "stop";
     this.location = 'floor';
     this.limitToJump = canvas.height - 280;
+    this.isDead = false;
   }
 
   collision(item) {
@@ -338,8 +339,6 @@ class Hero {
         this.image = this.image28;
         break;
       case "shot-down":
-      console.log(this.jump);
-      console.log(this.limitToJump);
         this.width = 90;
         this.height = 90;
         this.side = "down";
