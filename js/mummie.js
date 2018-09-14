@@ -339,6 +339,7 @@ class Mummie {
         mummie.action == "left" || mummie.action == "dead-left"
           ? "dead-left"
           : "dead-right";
+        mummie.damage = 0;
     }
   }
 
@@ -397,7 +398,8 @@ function drawingMummies() {
     mummie.getDirection();
     mummie.draw();
     mummie.checkIsDead(indexMummie);
-    if (hero.collision(mummie)) {
+    //Si la momia está desapareciendo, no asesina al heroe
+    if (hero.collision(mummie) && mummie.damage > 0) {
       heroDeadMusic.play();
       hero.isDead = true;
       hero.action = hero.side == "left" ? "dead-left" : "dead-right";
