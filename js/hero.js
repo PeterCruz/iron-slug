@@ -3,7 +3,7 @@ class Hero {
     this.x = 10;
     this.y = 170;
     this.vx = 0;
-    this.vy = 1;
+    this.vy = 3;
     this.jump = false;
     this.width = 60;
     this.height = 90;
@@ -356,6 +356,7 @@ class Hero {
         this.jump = true;
       } else {
         this.y = this.limitToJump;
+        this.vy = 3;
         this.jump = false;
       }
     }

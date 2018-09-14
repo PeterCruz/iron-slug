@@ -366,7 +366,7 @@ function generateMummies() {
           min = 165;
           max = 288;
         } else {
-          min = 280;
+          min = 300;
           max = 385;
         }
         mummie.y = Math.floor(Math.random() * (max - min)) + min;

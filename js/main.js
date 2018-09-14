@@ -4,7 +4,7 @@ var interval;
 var frames = 0;
 var gravity = 0.05;
 var keys = {};
-var maxMummies = 5;
+var maxMummies = 3;
 var shots = [];
 var stage = 1;
 var isMusicOff = true;
@@ -86,8 +86,8 @@ addEventListener("keydown", function(e) {
   }
   //Bloquear cualquier movimiento si ya fue atrapado
   if (hero.isDead) return;
-  //Saltar
-  if (keys[32]) {
+  //Saltar y bloquear que no haya dobles saltos
+  if (keys[32] && hero.jump == false) {
     hero.vx = 0;
     //Subir a la primer piedra
     //Solo cuando este en stop y abajo de la piedra
@@ -99,8 +99,8 @@ addEventListener("keydown", function(e) {
       hero.y >= 260 &&
       hero.location != "first-rock"
     ) {
-      hero.jump = true;
       hero.limitToJump = 260;
+      hero.jump = true;
       hero.location = "first-rock";
       return;
     }
@@ -241,6 +241,11 @@ addEventListener("keydown", function(e) {
       return;
     }
 
+    //Escenario 2, que al saltar ascienda poco a poco
+    if (stage == 2) {
+      hero.limitToJump -= 15;
+    }
+
     if (hero.jump) {
       hero.x < canvas.width - hero.width
         ? (hero.vx = 3)
@@ -250,6 +255,11 @@ addEventListener("keydown", function(e) {
   }
   //Saltar y avanzar izquierda
   if (keys[32] && keys[37]) {
+    //Escenario 2, que al saltar descienda poco a poco
+    if (stage == 2) {
+      hero.limitToJump += 15;
+    }
+
     if (hero.jump) {
       if (hero.x > 10) {
         hero.vx = -3;
